@@ -1,13 +1,3 @@
-# ==============================================================================
-# Effet d'une formation au raisonnement clinique sur l'auto-efficacité (PTSE)
-# et l'auto-évaluation du raisonnement clinique (SACRR) chez des
-# kinésithérapeutes burundais : étude pré-test / post-test
-#
-#
-# Sorties : Tableaux I à IV + tableau des critères principaux (Word),
-#           Figure annexe (PNG), fichiers CSV
-# ==============================================================================
-
 library(tidyverse)   # manipulation des données et graphiques
 library(readxl)      # lecture des fichiers Excel
 library(janitor)     # nettoyage des noms de variables
@@ -16,7 +6,6 @@ library(rstatix)     # taille d'effet du test de Wilcoxon
 library(flextable)   # mise en forme des tableaux
 library(officer)     # export Word
 library(coin)        # Z du test de Wilcoxon signé-rang (taille d'effet r)
-# Si besoin : install.packages("coin")
 
 # --- Mise en forme (anglais, point décimal) -----------------------------------
 fmt   <- function(x, d = 1) formatC(x, format = "f", digits = d)
@@ -61,9 +50,6 @@ post <- post %>%
 
 
 # 2. Nettoyage de l'âge --------------------------------------------------------
-# La variable contient des formats mixtes : âge, année de naissance,
-# date complète (3/8/1994) ou mois/année (04/1994).
-
 annee_ref <- 2025
 
 calcul_age <- function(x) {
@@ -149,10 +135,6 @@ sapply(pre %>% select(region, sexe, experience, emploi, formation_rc, supervisio
 
 
 # 4. Appariement pré / post ----------------------------------------------------
-# Correspondance établie manuellement : la ligne i du pré-test est appariée à
-# la ligne j du post-test. Les lignes 2, 5, 14 et 19 du pré-test n'ont pas de
-# réponse au post-test (perdus de vue).
-# >>> À RE-VÉRIFIER avec un identifiant/code participant si le formulaire en contient un.
 
 lignes_pre  <- c(1, 3, 4, 6, 7, 8, 9, 10, 11, 12, 13, 15, 16, 17, 18, 20)
 lignes_post <- c(14, 5, 6, 16, 3, 13, 15, 1, 8, 7, 10, 4, 9, 2, 11, 12)
@@ -178,9 +160,6 @@ paires <- tibble(
 
 
 # 5. Tests de normalité --------------------------------------------------------
-# Shapiro-Wilk sur les scores (pré et post) et sur les scores de changement
-# appariés (post - pré). Le choix du test repose sur la normalité des changements.
-
 normalite <- tibble(
   Variable = c("PTSE pre", "PTSE post", "SACRR pre", "SACRR post",
                "PTSE change score", "SACRR change score"),
